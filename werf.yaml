@@ -1,0 +1,10 @@
+configVersion: 1
+project: dataaggregator
+
+---
+image: data_aggregator__common_python
+dockerfile: srv/common-python/Dockerfile
+---
+
+image: data_aggregator__communication__balancer
+dockerfile: src/data_aggregator__balancer/Dockerfile

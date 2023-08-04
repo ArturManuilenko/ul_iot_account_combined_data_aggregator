@@ -1,0 +1,516 @@
+openapi: 3.0.1
+info:
+  title: DA API
+  description: Generated at 22/11/2021 05:39:50. This is the swagger
+    ui based on the open api 3.0 specification of the DA API
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
+servers:
+  - url: /
+paths:
+  '/api/v1/events-battery/devices':
+    get:
+      summary: permission -> 0 - PUBLIC - public access
+      tags:
+      - api_device_event
+      operationId: 'api.da_get_events_low_battery_devices'
+      requestBody:
+        required: True
+        content:
+           application/json:
+               schema:
+                   $ref: '#/components/schemas/api.da_get_events_low_battery_devices_request_body_schema'
+      responses:
+        '200':
+          $ref: '#/components/responses/api.da_get_events_low_battery_devices_response'
+  '/api/v1/events-magnet/devices':
+    get:
+      summary: permission -> 0 - PUBLIC - public access
+      tags:
+      - api_device_event
+      operationId: 'api.da_get_events_magnet_devices'
+      requestBody:
+        required: True
+        content:
+           application/json:
+               schema:
+                   $ref: '#/components/schemas/api.da_get_events_magnet_devices_request_body_schema'
+      responses:
+        '200':
+          $ref: '#/components/responses/api.da_get_events_magnet_devices_response'
+  '/api/v1/list-device/value-reporting-period':
+    get:
+      summary: permission -> 0 - PUBLIC - public access
+      tags:
+      - api_device_value
+      operationId: 'api.da_get_value_reporting_period_by_device_list'
+      requestBody:
+        required: True
+        content:
+           application/json:
+               schema:
+                   $ref: '#/components/schemas/api.da_get_value_reporting_period_by_device_list_request_body_schema'
+      responses:
+        '200':
+          $ref: '#/components/responses/api.da_get_value_reporting_period_by_device_list_response'
+  '/api/v1/list-device/sum-diff-value-by-day':
+    get:
+      summary: permission -> 1 - PRIVATE_AT - user must be logged in
+      tags:
+      - api_device_value
+      operationId: 'api.da_get_sum_device_value_by_day'
+      requestBody:
+        required: True
+        content:
+           application/json:
+               schema:
+                   $ref: '#/components/schemas/api.da_get_sum_device_value_by_day_request_body_schema'
+      responses:
+        '200':
+          $ref: '#/components/responses/api.da_get_sum_device_value_by_day_response'
+      security:
+        - bearerAuth: []
+  '/api/v1/list-device/value-object-period':
+    post:
+      summary: permission -> 0 - PUBLIC - public access
+      tags:
+      - api_device_value
+      operationId: 'api.da_get_object_values_by_device_list'
+      requestBody:
+        required: True
+        content:
+           application/json:
+               schema:
+                   $ref: '#/components/schemas/api.da_get_object_values_by_device_list_request_body_schema'
+      responses:
+        '200':
+          $ref: '#/components/responses/api.da_get_object_values_by_device_list_response'
+  '/api/v1/list-device/value-delta':
+    post:
+      summary: permission -> 0 - PUBLIC - public access
+      tags:
+      - api_device_value
+      operationId: 'api.da_get_delta_value_by_device_list'
+      requestBody:
+        required: True
+        content:
+           application/json:
+               schema:
+                   $ref: '#/components/schemas/api.da_get_delta_value_by_device_list_request_body_schema'
+      responses:
+        '200':
+          $ref: '#/components/responses/api.da_get_delta_value_by_device_list_response'
+  '/api/v1/list-device/last-value':
+    get:
+      summary: permission -> 0 - PUBLIC - public access
+      tags:
+      - api_device_value
+      operationId: 'api.da_get_last_value_by_device_list'
+      requestBody:
+        required: True
+        content:
+           application/json:
+               schema:
+                   $ref: '#/components/schemas/api.da_get_last_value_by_device_list_request_body_schema'
+      responses:
+        '200':
+          $ref: '#/components/responses/api.da_get_last_value_by_device_list_response'
+  '/api/v1/list-device/imbalance':
+    post:
+      summary: permission -> 0 - PUBLIC - public access
+      tags:
+      - api_device_value
+      operationId: 'api.da_get_imbalance_value_by_device_list'
+      requestBody:
+        required: True
+        content:
+           application/json:
+               schema:
+                   $ref: '#/components/schemas/api.da_get_imbalance_value_by_device_list_request_body_schema'
+      responses:
+        '200':
+          $ref: '#/components/responses/api.da_get_imbalance_value_by_device_list_response'
+  '/api/v1/events/devices':
+    get:
+      summary: permission -> 0 - PUBLIC - public access
+      tags:
+      - api_device_event
+      operationId: 'api.da_get_events_devices'
+      requestBody:
+        required: True
+        content:
+           application/json:
+               schema:
+                   $ref: '#/components/schemas/api.da_get_events_devices_request_body_schema'
+      responses:
+        '200':
+          $ref: '#/components/responses/api.da_get_events_devices_response'
+  '/api/v1/device/<uuid:device_id>/temperature/interpretation':
+    get:
+      summary: permission -> 11057 - DA_GET_DEVICE_TEMPERATURE_INTERPRETATION - temperature  - get temperature list interpretation
+      tags:
+      - api_device_temperature
+      operationId: 'api.da_get_device_temperature_interpretation'
+      responses:
+        '200':
+          $ref: '#/components/responses/api.da_get_device_temperature_interpretation_response'
+      security:
+        - bearerAuth: []
+      parameters:
+      - in: path
+        name: device_id
+        schema:
+          type: uuid
+        description: None
+        required: True
+  '/api/v1/device/<uuid:device_id>/ts-value/interpretation':
+    get:
+      summary: permission -> 11061 - DA_GET_DEVICE_VALUE_INTERPRETATION - value  - get value list interpretation
+      tags:
+      - api_device_value
+      operationId: 'api.da_get_device_value_interpretation'
+      responses:
+        '200':
+          $ref: '#/components/responses/api.da_get_device_value_interpretation_response'
+      security:
+        - bearerAuth: []
+      parameters:
+      - in: path
+        name: device_id
+        schema:
+          type: uuid
+        description: None
+        required: True
+  '/api/v1/device/<uuid:device_id>/battery/interpretation':
+    get:
+      summary: permission -> 11059 - DA_GET_DEVICE_BATTERY_INTERPRETATION - battery  - get battery list interpretation
+      tags:
+      - api_device_battery
+      operationId: 'api.da_get_device_battery_interpretation'
+      responses:
+        '200':
+          $ref: '#/components/responses/api.da_get_device_battery_interpretation_response'
+      security:
+        - bearerAuth: []
+      parameters:
+      - in: path
+        name: device_id
+        schema:
+          type: uuid
+        description: None
+        required: True
+  '/api/v1/device/<uuid:device_id>/temperature':
+    get:
+      summary: permission -> 11056 - DA_GET_DEVICE_TEMPERATURE - temperature  - get temperature list
+      tags:
+      - api_device_temperature
+      operationId: 'api.da_get_device_temperature'
+      responses:
+        '200':
+          $ref: '#/components/responses/api.da_get_device_temperature_response'
+      security:
+        - bearerAuth: []
+      parameters:
+      - in: path
+        name: device_id
+        schema:
+          type: uuid
+        description: None
+        required: True
+  '/api/v1/device/<uuid:device_id>/ts-value':
+    get:
+      summary: permission -> 11060 - DA_GET_DEVICE_VALUE - value  - get value list
+      tags:
+      - api_device_value
+      operationId: 'api.da_get_device_value'
+      responses:
+        '200':
+          $ref: '#/components/responses/api.da_get_device_value_response'
+      security:
+        - bearerAuth: []
+      parameters:
+      - in: path
+        name: device_id
+        schema:
+          type: uuid
+        description: None
+        required: True
+  '/api/v1/device/<uuid:device_id>/battery':
+    get:
+      summary: permission -> 11058 - DA_GET_DEVICE_BATTERY - battery  - get battery list
+      tags:
+      - api_device_battery
+      operationId: 'api.da_get_device_battery'
+      responses:
+        '200':
+          $ref: '#/components/responses/api.da_get_device_battery_response'
+      security:
+        - bearerAuth: []
+      parameters:
+      - in: path
+        name: device_id
+        schema:
+          type: uuid
+        description: None
+        required: True
+  '/api/v1/events/<uuid:device_id>':
+    get:
+      summary: permission -> 0 - PUBLIC - public access
+      tags:
+      - api_device_event
+      operationId: 'api.da_get_device_events'
+      responses:
+        '200':
+          $ref: '#/components/responses/api.da_get_device_events_response'
+      parameters:
+      - in: path
+        name: device_id
+        schema:
+          type: uuid
+        description: None
+        required: True
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  requestBodies:
+    api.da_get_events_low_battery_devices_request_body:
+      description: None
+      required: True
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_events_low_battery_devices_request_body_schema'
+    api.da_get_events_magnet_devices_request_body:
+      description: None
+      required: True
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_events_magnet_devices_request_body_schema'
+    api.da_get_value_reporting_period_by_device_list_request_body:
+      description: None
+      required: True
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_value_reporting_period_by_device_list_request_body_schema'
+    api.da_get_sum_device_value_by_day_request_body:
+      description: None
+      required: True
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_sum_device_value_by_day_request_body_schema'
+    api.da_get_object_values_by_device_list_request_body:
+      description: None
+      required: True
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_object_values_by_device_list_request_body_schema'
+    api.da_get_delta_value_by_device_list_request_body:
+      description: None
+      required: True
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_delta_value_by_device_list_request_body_schema'
+    api.da_get_last_value_by_device_list_request_body:
+      description: None
+      required: True
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_last_value_by_device_list_request_body_schema'
+    api.da_get_imbalance_value_by_device_list_request_body:
+      description: None
+      required: True
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_imbalance_value_by_device_list_request_body_schema'
+    api.da_get_events_devices_request_body:
+      description: None
+      required: True
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_events_devices_request_body_schema'
+  responses:
+    api.da_get_events_low_battery_devices_response:
+      description: api.da_get_events_low_battery_devices response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_events_low_battery_devices_response_schema'
+    api.da_get_events_magnet_devices_response:
+      description: api.da_get_events_magnet_devices response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_events_magnet_devices_response_schema'
+    api.da_get_value_reporting_period_by_device_list_response:
+      description: api.da_get_value_reporting_period_by_device_list response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_value_reporting_period_by_device_list_response_schema'
+    api.da_get_sum_device_value_by_day_response:
+      description: api.da_get_sum_device_value_by_day response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_sum_device_value_by_day_response_schema'
+    api.da_get_object_values_by_device_list_response:
+      description: api.da_get_object_values_by_device_list response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_object_values_by_device_list_response_schema'
+    api.da_get_delta_value_by_device_list_response:
+      description: api.da_get_delta_value_by_device_list response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_delta_value_by_device_list_response_schema'
+    api.da_get_last_value_by_device_list_response:
+      description: api.da_get_last_value_by_device_list response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_last_value_by_device_list_response_schema'
+    api.da_get_imbalance_value_by_device_list_response:
+      description: api.da_get_imbalance_value_by_device_list response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_imbalance_value_by_device_list_response_schema'
+    api.da_get_events_devices_response:
+      description: api.da_get_events_devices response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_events_devices_response_schema'
+    api.da_get_device_temperature_interpretation_response:
+      description: api.da_get_device_temperature_interpretation response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_device_temperature_interpretation_response_schema'
+    api.da_get_device_value_interpretation_response:
+      description: api.da_get_device_value_interpretation response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_device_value_interpretation_response_schema'
+    api.da_get_device_battery_interpretation_response:
+      description: api.da_get_device_battery_interpretation response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_device_battery_interpretation_response_schema'
+    api.da_get_device_temperature_response:
+      description: api.da_get_device_temperature response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_device_temperature_response_schema'
+    api.da_get_device_value_response:
+      description: api.da_get_device_value response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_device_value_response_schema'
+    api.da_get_device_battery_response:
+      description: api.da_get_device_battery response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_device_battery_response_schema'
+    api.da_get_device_events_response:
+      description: api.da_get_device_events response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/api.da_get_device_events_response_schema'
+  schemas:
+    api.da_get_events_low_battery_devices_request_body_schema:
+      type: object
+      properties: {'devices': {'title': 'Devices', 'type': 'array', 'items': {'type': 'string', 'format': 'uuid4'}}}
+    api.da_get_events_low_battery_devices_response_schema:
+      type: object
+      properties: {}
+    api.da_get_events_magnet_devices_request_body_schema:
+      type: object
+      properties: {'devices': {'title': 'Devices', 'type': 'array', 'items': {'type': 'string', 'format': 'uuid4'}}}
+    api.da_get_events_magnet_devices_response_schema:
+      type: object
+      properties: {}
+    api.da_get_value_reporting_period_by_device_list_request_body_schema:
+      type: object
+      properties: {'devices': {'title': 'Devices', 'type': 'array', 'items': {'type': 'array', 'items': {}}}}
+    api.da_get_value_reporting_period_by_device_list_response_schema:
+      type: object
+      properties: {}
+    api.da_get_sum_device_value_by_day_request_body_schema:
+      type: object
+      properties: {'devices': {'title': 'Devices', 'type': 'array', 'items': {'type': 'array', 'items': {}}}}
+    api.da_get_sum_device_value_by_day_response_schema:
+      type: object
+      properties: {}
+    api.da_get_object_values_by_device_list_request_body_schema:
+      type: object
+      properties: {'devices': {'title': 'Devices', 'type': 'object', 'additionalProperties': {'type': 'array', 'items': {'type': 'array', 'items': {}}}}}
+    api.da_get_object_values_by_device_list_response_schema:
+      type: object
+      properties: {}
+    api.da_get_delta_value_by_device_list_request_body_schema:
+      type: object
+      properties: {'devices': {'title': 'Devices', 'type': 'object', 'additionalProperties': {'type': 'array', 'items': {'type': 'array', 'items': {}}}}}
+    api.da_get_delta_value_by_device_list_response_schema:
+      type: object
+      properties: {}
+    api.da_get_last_value_by_device_list_request_body_schema:
+      type: object
+      properties: {'devices': {'title': 'Devices', 'type': 'array', 'items': {'type': 'array', 'items': {}}}}
+    api.da_get_last_value_by_device_list_response_schema:
+      type: object
+      properties: {}
+    api.da_get_imbalance_value_by_device_list_request_body_schema:
+      type: object
+      properties: {'devices': {'title': 'Devices', 'type': 'object', 'additionalProperties': {'type': 'array', 'items': {'type': 'array', 'items': {}}}}}
+    api.da_get_imbalance_value_by_device_list_response_schema:
+      type: object
+      properties: {}
+    api.da_get_events_devices_request_body_schema:
+      type: object
+      properties: {'devices': {'title': 'Devices', 'type': 'array', 'items': {'type': 'string', 'format': 'uuid4'}}}
+    api.da_get_events_devices_response_schema:
+      type: object
+      properties: {}
+    api.da_get_device_temperature_interpretation_response_schema:
+      type: object
+      properties: {}
+    api.da_get_device_value_interpretation_response_schema:
+      type: object
+      properties: {}
+    api.da_get_device_battery_interpretation_response_schema:
+      type: object
+      properties: {}
+    api.da_get_device_temperature_response_schema:
+      type: object
+      properties: {}
+    api.da_get_device_value_response_schema:
+      type: object
+      properties: {}
+    api.da_get_device_battery_response_schema:
+      type: object
+      properties: {}
+    api.da_get_device_events_response_schema:
+      type: object
+      properties: {}

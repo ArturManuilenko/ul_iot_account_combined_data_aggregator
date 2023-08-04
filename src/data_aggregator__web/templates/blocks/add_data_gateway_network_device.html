@@ -1,0 +1,82 @@
+<div class="col-12 border bg-light" style="margin-top:20px; padding-top: 10px; padding-bottom: 10px" id="view_add_network_device">
+
+  <div class="row" style="margin-top:10px">
+    <div class="col-5 text-right align-self-center">
+      MAC:
+    </div>
+    <div class="col-7 align-self-center">
+      <input type="text" class="col-sm-12 form-control" id="mac" name="mac" placeholder="MAC">
+    </div>
+  </div>
+
+
+   <div class="row" style="margin-top:10px">
+    <div class="col-5 text-right align-self-center">
+      data_gateway:
+    </div>
+    <div class="col-7 align-self-center">
+      <select class="form-control" id="data_gateway" name="data_gateway">
+      </select>
+    </div>
+  </div>
+
+
+  <div class="row" style="margin-top:10px">
+    <div class="col-5 text-right align-self-center">
+      data_gateway_network:
+    </div>
+    <div class="col-7 align-self-center">
+      <select class="form-control" id="data_gateway_network" name="data_gateway_network">
+      </select>
+    </div>
+  </div>
+
+
+  <div class="row" style="margin-top:10px;">
+    <div class="col-5 text-right align-self-center">
+      uplink_protocol:
+    </div>
+    <div class="col-7 align-self-center">
+      <select class="form-control" id="uplink_protocol" name="uplink_protocol">
+      </select>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:10px">
+    <div class="col-5 text-right align-self-center">
+      downlink_protocol:
+    </div>
+    <div class="col-7 align-self-center">
+      <select class="form-control" id="downlink_protocol" name="downlink_protocol">
+      </select>
+    </div>
+  </div>
+
+</div>
+<script>
+
+  let state_data_gateway = document.getElementById('data_gateway')
+  let state_data_gateway_network = document.getElementById('data_gateway_network')
+
+  state_data_gateway.onchange = function () {
+    state = state_data_gateway.value;
+    if (state != 'None') {
+      fetch('/data_gateway_network/gateway_id/' + state).then(function (response) {
+        response.json().then(function (data) {
+          console.table(data);
+          let optionHTML = '';
+          for (let gateway of data.payload) {
+            optionHTML += '<option value="' + gateway.id + '">' + gateway.name + '</option>';
+          }
+          state_data_gateway_network.innerHTML = optionHTML;
+        });
+      });
+    } else {
+     state_data_gateway_network.innerHTML = '<option value="None">--------</option>';
+    }
+
+  }
+
+</script>
+
+

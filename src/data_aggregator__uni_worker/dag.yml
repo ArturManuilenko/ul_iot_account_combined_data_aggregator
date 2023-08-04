@@ -1,0 +1,55 @@
+---
+
+service:
+  name: "data_aggregator"
+  echo_colors: true
+  echo_level: debug
+
+brokers:
+  default_broker:
+    import_template: "src.data_aggregator__uni_worker.brokers.amqp_default_broker:DefaultAmqpBroker"
+
+
+messages:
+  __default__:
+    import_template: "src.data_aggregator__uni_worker.messages.{{name}}_message:{{name|camel}}V0Message"
+
+  data_aggregator_input: {}
+
+  event: {}
+
+  device_data: {}
+
+
+waitings:
+  __default__:
+    retry_max_count: 100
+    retry_delay_s: 1
+    import_template: src.data_aggregator__uni_worker.waitings.{{name}}:{{name|camel}}Waiting
+
+  data_aggregator_db: {}
+
+
+workers:
+  __default__:
+    import_template: "src.data_aggregator__uni_worker.workers.{{name}}:{{name|camel}}Worker"
+    topic: "{{name}}"
+    broker: default_broker
+
+  data_aggregator_input:
+    input_message: data_aggregator_input
+    output_workers:
+      - event
+      - device_data
+    waiting_for:
+      - data_aggregator_db
+
+  event:
+    input_message: event
+    waiting_for:
+      - data_aggregator_db
+
+  device_data:
+    input_message: device_data
+    waiting_for:
+      - data_aggregator_db

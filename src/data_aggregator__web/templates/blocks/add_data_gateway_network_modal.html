@@ -1,0 +1,34 @@
+<!-- Modal -->
+<div class="modal fade" id="add_data_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add {{ title.lower() }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="{{ url_for('new_data_gateway_network')}}">
+          <div class="modal-body">
+            <div class="form-group mx-sm-3 mb-2">
+              <input type="text" class="col-sm-8 form-control" id="add_name" name="add_name" placeholder="Name">
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+              <select class="col-sm-8 form-control" id="id_data_gateway" name="id_data_gateway">
+                  <option value=""></option>
+              </select>
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+              <select class="col-sm-8 form-control" id="type" name="type">
+                  <option value="input">input</option>
+                  <option value="output">output</option>
+              </select>
+            </div>
+          </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link {% if active == 'devices' %}active{% endif %}" href="{{ url_for('view_devices') }}">
+              <i class="bi bi-grid-3x3-gap"></i>
+              Devices
+            </a>
+          </li>
+          <li class="nav-item">
+                <a class="nav-link {% if active == 'data_gateway_network' %}active{% endif %}" href="{{ url_for('view_data_gateway_network') }}">
+                    <i class="bi bi-grid-3x3-gap"></i>
+                    Data gateway network
+                </a>
+            </li>
+          <li class="nav-item">
+                <a class="nav-link {% if active == 'data_gateway' %}active{% endif %}" href="{{ url_for('view_data_gateway') }}">
+                    <i class="bi bi-grid-3x3-gap"></i>
+                    Data gateway
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active == 'protocol' %}active{% endif %}" href="{{ url_for('view_protocol') }}">
+                    <i class="bi bi-grid-3x3-gap"></i>
+                    Protocols
+                </a>
+            </li>
+           <li class="nav-item">
+                <a class="nav-link {% if active == 'manufacturer' %}active{% endif %}" href="{{ url_for('view_manufacturer') }}">
+                    <i class="bi bi-grid-3x3-gap"></i>
+                    Manufacturer
+                </a>
+            </li>
+          <li class="nav-item">
+                <a class="nav-link {% if active == 'device_modification' %}active{% endif %}" href="{{ url_for('view_device_modification') }}">
+                    <i class="bi bi-grid-3x3-gap"></i>
+                    Device modification
+                </a>
+            </li>
+          <li class="nav-item">
+            <a class="nav-link {% if active == 'device_modification_type' %}active{% endif %}" href="{{ url_for('view_device_modification_type') }}">
+              <i class="bi bi-grid-3x3-gap"></i>
+              Device modification type
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if active == 'device_metering_type' %}active{% endif %}" href="{{ url_for('view_device_metering_type') }}">
+              <i class="bi bi-grid-3x3-gap"></i>
+              Devices metering type
+            </a>
+          </li>
+        </ul>
+    </div>
+</nav>

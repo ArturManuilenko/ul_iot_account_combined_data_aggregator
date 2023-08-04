@@ -1,0 +1,41 @@
+<div class="col-12 border bg-light" style="margin-top:20px; padding-top: 10px; padding-bottom: 10px">
+    <div class="row">
+      <div class="col-5 text-right align-self-center">
+        device_type:
+      </div>
+      <div class="col-7 align-self-center">
+        <select class="form-control" id="device_type" name="device_type">
+        </select>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:10px;">
+      <div class="col-5 text-right align-self-center">
+        device_manufacturer:
+      </div>
+      <div class="col-7 align-self-center">
+        <select class="form-control" id="device_manufacturer" name="device_manufacturer">
+        </select>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:10px;">
+      <div class="col-5 text-right align-self-center">
+        manufacturer_serial_number:
+      </div>
+      <div class="col-7 align-self-center">
+        <input type="text" class="col-sm-12 form-control" id="manufacturer_serial_number" name="manufacturer_serial_number" placeholder="manufacturer_serial_number">
+      </div>
+    </div>
+
+    <div class="row" style="padding-left: 10px; padding-bottom: 10px; padding-top: 15px">
+      <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-secondary active" onchange="show_view_add_network_device();">
+          <input id="buttton2" type="radio" name="options" checked> Add network_device
+        </label>
+        <label class="btn btn-secondary" onchange="hidden_view_add_network_device();">
+          <input type="radio" name="options" id="no_add_network_device"> Not add network_device
+        </label>
+      </div>
+    </div>
+</div>

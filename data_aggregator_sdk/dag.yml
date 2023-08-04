@@ -1,0 +1,27 @@
+---
+
+service:
+  name: "data_aggregator"
+  echo_colors: true
+  echo_level: debug
+
+external:
+  data_aggregator_input: {}
+
+brokers:
+  data_aggregator_input_broker:
+    import_template: "data_aggregator_sdk.brokers.data_aggregator_input_broker:DataAggregatorInputBroker"
+
+messages:
+  data_aggregator_input:
+     import_template: "data_aggregator_sdk.{{name}}_message:{{name|camel}}V0Message"
+
+workers:
+  __default__:
+    import_template: "src.data_gateway__uni_worker.workers.{{name}}:{{name|camel}}Worker"
+    topic: "{{name}}"
+
+  data_aggregator_input:
+    broker: data_aggregator_input_broker
+    input_message: data_aggregator_input
+    external: data_aggregator_input

@@ -1,0 +1,28 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[[source]]
+name = "nero_gitlab"
+verify_ssl = false
+url = "https://__token__:kZG7esv72n325czD7Wdg@gitlab.neroelectronics.by/api/v4/projects/996/packages/pypi/simple"
+
+[packages]
+pycryptodome = "==3.10.1"
+numpy = "==1.21.3"
+
+unipipeline = ">=1.4.5"
+api-utils = {version = "==1.6.23", index = "nero_gitlab"}
+db-utils = {version = "==1.6.7", index = "nero_gitlab"}
+ul_py_tool = {version = "==1.2.2", index = "nero_gitlab"}
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
+
+[scripts]
+prepare = "python3 setup.py sdist bdist_wheel"
+lint = "ulpytool lint --py-files src/**/*.py data_aggregator_sdk/**/*.py --py-files-ignore src/data_aggregator__db/migrations/**/*.py"
+test = "ulpytool test"

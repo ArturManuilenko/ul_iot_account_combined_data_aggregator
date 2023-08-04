@@ -1,0 +1,53 @@
+<!-- Modal -->
+<div class="modal fade" id="add_data_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add {{ title.lower() }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="{{ url_for('new_device_modification_type') }}">
+          <div class="modal-body">
+            <div class="form-group mx-sm-3 mb-2">
+
+              <div class="form-group">
+                <label for="device_metring_type">Select device metering_type</label>
+                <select class="form-control" id="device_metring_type" name="device_metring_type">
+                  <option></option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="device_metring_type">Select type device_modification_type</label>
+                <select class="form-control" id="type" name="type">
+                  <option value="smart_meter">smart_meter</option>
+                  <option value="modem">modem</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="sys_name">Sys_name</label>
+                <input type="text" class="form-control" id="sys_name" name="sys_name">
+              </div>
+
+              <div class="form-group">
+                 <label for="name_ru">Name_ru</label>
+                <input type="text" class="form-control" id="name_ru" name="name_ru">
+              </div>
+
+              <div class="form-group">
+                <label for="name_en">Name_en</label>
+                <input type="text" class="form-control" id="name_en" name="name_en">
+              </div>
+
+            </div>
+          </div>
+        <div class="modal-footer">
+          <button type="submit" id="add_submit" name="add_submit" class="btn btn-success">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

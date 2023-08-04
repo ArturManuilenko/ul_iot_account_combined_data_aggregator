@@ -1,0 +1,223 @@
+version: "3.8"
+
+
+volumes:
+  rabbitmq_data:
+  device_db_volume:
+
+x-uni-env: &uni-env
+  SERVICE_DATA_AGGREGATOR_DB__DB_URI: "postgresql://admin:admin@data_aggregator__db:5432/device_db"
+  SERVICE_DATA_AGGREGATOR_DB__SYS_USER_ID: "216db501-0d57-425a-a062-7b3465426a5b"
+  JWT_PUBLIC_KEY: 'LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQ0lqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FnOEFNSUlDQ2dLQ0FnRUFvdSs5OGtoM3A2dURTZHZURW5ZVApyNVBSTHJzQ3JVRFRVWU1LanFPTGFTbnFWMmRuWjZLNDhERnhHWFJUcVoycXkyWmpTam5EdmJWazRUeWlhQTZkCjUwbTYvZzQ1OGxFN2ZxYjZtV0d6ajNpVW5HZm5yV2ZsT1VDQnhuMy9pYkRqbUExb21YbkFvdVV0QUtRQ0tvSTYKS2VGc2pvaWVSTzNVYVdNYnYwc0RheUtjOEFOUUFWOGFBY1Z6RTdtNjJYc2xUMHJ2TzBEQnByMHp0dFFXVkc0dApXYWZMbGhhdm43WFdxMzVpQWE5L1A0Rm45SUhOUkRMTHVGODc3SjN2c0NFOUxEdUxCS1Fkd0dZQ3ViNGpqRzVDCjR1RjlhTWoxa1pKSzAzWWVaVTVZZnBKSC9oOUV6MEFKRzI2ZTNMTWltQlBGT3NINUdjSXBFWGVFMCtXd3oxT1AKZVJzZXZ3Qzh4bWNPdEM2QkI1TkRNcS9nRmcvUitlVnpTYjBNUVJVRTgyYlJweTRhcmhwazllK3dBWDQ2TzgxNQpxa0VXQk8xSHJNajVpNmRIL2w2aDFONUVhZ0tLZXFBbU10YXorbDNxMzYwMThEY2V0dTNkZzV2Q3lBOGpRbVNFCm1TZ2tsL3pianV2QkNvS1k5Z0xBdzJRUDY3VDRCb0pOdUg3b25mL0RRa01yQTBuaCt6VWhROHdJNy9DemFDRWEKa0EvczVFemtLVFZqcXhTRXl2RGZqZUNlaHc2S01kbFl1YTVzS1Q5cXdrRDNxSnc3STZQK2hHd3padXNnQ1AvSQp0L1JDcTN5cG9LZjd1TWJ4WVJUU3ovaVhsaUh1a3VQRlh3T0Y5MTlBWWhSUFlRWlZjeG05WGVJOG9xYk92OG9sCm5sTGE5US9YWkxlSEtMWG05ZEU5VzJNQ0F3RUFBUT09Ci0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQ=='
+  API__VERSION: "v1"
+  NERO_OLD__ENC_KEY_ID: '032f7c78-a871-48ce-a0f3-8633152429a9'
+  NERO_OLD__AES_KEY: 'SHH2sXqzQ9pAXmFj3S3aydbKwwqxdd6M'
+  APPLICATION_BROKER_URI: "amqp://admin:admin@data_aggregator__broker__amqp:5672"
+  SERVICE_DATA_AGGREGATOR_DB__SYS__TYPE_ID: "c8a0811f-24a8-4517-aab8-e227f2b35533"
+  SERVICE_DATA_AGGREGATOR_DB__SYS__MANUFACTURER_ID: "d02f5807-4545-40fd-9f5d-091822d6868f"
+  SERVICE_DATA_AGGREGATOR_DB__SYS__GATEWAY_ID: "e77ea8e3-105b-410d-b383-f0f6a62efca9"
+  SERVICE_DATA_AGGREGATOR_DB__SYS__PROTOCOL_ID_SMP: "f95ec7ef-07bb-4dac-aa26-8bca2e6cfc3b"
+  SERVICE_DATA_AGGREGATOR_DB__SYS__PROTOCOL_ID_SMP_NCP: "6e65e16c-38b1-430f-bb05-e28242af214a"
+  SERVICE_DATA_AGGREGATOR_DB__SYS__PROTOCOL_ID_WATER_5: "f2aee1b0-8d8f-4800-92bc-b60213cb0df7"
+  SERVICE_DATA_AGGREGATOR_DB__SYS__GATEWAY_NETWORK_ID: "324570cc-aef6-4a05-8989-ee246155bf7d"
+  SERVICE_DATA_AGGREGATOR_DB__SYS__GATEWAY_NETWORK__SMP_UDP_SERVER__ID: "3b0ab436-7357-4041-8533-0b48b41d097d"
+  SERVICE_DATA_AGGREGATOR_DB__SYS__GATEWAY_NETWORK__SMP_NCP_UDP_SERVER__ID: "c11e99b9-eaaa-4972-a34f-2303da768ac8"
+  SERVICE_DATA_AGGREGATOR_DB__BATTERY_THRESHOLD: 3.0
+
+
+
+services:
+
+  data_aggregator__balancer:
+    image: library/nginx:1.19-alpine
+    volumes:
+      - ./src/data_aggregator__balancer/local/:/etc/nginx/:ro
+      - ./src/data_aggregator__web/static/:/docker_app/data_aggregator__web/static/:ro
+    ports:
+      - 3332:3332 # database
+      - 32356:32356 # data_aggregator__web
+      - 32314:32314 # data_aggregator__api
+      - 32315:32315 # data_aggregator__device__api
+      - 32344:32344 # data_aggregator__db__ui
+      - 32327:32327 # data_aggregator__broker__amqp
+      - 32326:32326 # data_aggregator__broker__amqp_view
+    depends_on:
+      - data_aggregator__web
+      - data_aggregator__api
+      - data_aggregator__device__api
+      - data_aggregator__db
+      - data_aggregator__db__ui
+      - data_aggregator__broker__amqp
+    command: [ nginx-debug, '-g', 'daemon off;' ]
+
+  data_aggregator__db:
+    image: timescale/timescaledb:latest-pg12
+    container_name: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: device_db
+    ports:
+      - 5432:5432
+    volumes:
+      - ./src/backup:/mnt
+      - device_db_volume:/var/lib/postgresql
+
+  manager__data_aggregator__db:
+    build:
+      context: "."
+      dockerfile: "srv/common-python/Dockerfile"
+    environment:
+      APPLICATION_RELOAD: 1
+      <<: *uni-env
+    depends_on:
+      - data_aggregator__db
+    command: "echo 'DO NOTHING'"
+    volumes:
+      - ./src:/docker_app/src
+      - ./data_aggregator_sdk:/docker_app/data_aggregator_sdk
+
+
+  data_aggregator__api:
+    build:
+      context: "."
+      dockerfile: "srv/common-python/Dockerfile"
+    restart: on-failure
+    environment:
+      <<: *uni-env
+      APPLICATION_RELOAD: 1
+      APPLICATION_ENV: "local"
+      APPLICATION_PORT: 5000
+    command: "/docker_app/src/data_aggregator__api/bin-start.sh"
+    depends_on:
+      - data_aggregator__db
+    expose:
+      - 5000
+    volumes:
+      - ./src:/docker_app/src
+      - ./srv:/docker_app/srv
+      - ./data_aggregator_sdk:/docker_app/data_aggregator_sdk
+
+  data_aggregator__device__api:
+    build:
+      context: "."
+      dockerfile: "srv/common-python/Dockerfile"
+    restart: on-failure
+    environment:
+      <<: *uni-env
+      APPLICATION_RELOAD: 1
+      APPLICATION_ENV: "local"
+      APPLICATION_PORT: 5000
+    command: "/docker_app/src/data_aggregator__device__api/bin-start.sh"
+    depends_on:
+      - data_aggregator__db
+    expose:
+      - 5000
+    volumes:
+      - ./src:/docker_app/src
+      - ./srv:/docker_app/srv
+      - ./data_aggregator_sdk:/docker_app/data_aggregator_sdk
+    container_name: "data_aggregator__device__api"
+
+  data_aggregator__web:
+    build:
+      context: "."
+      dockerfile: "srv/common-python/Dockerfile"
+    restart: on-failure
+    environment:
+      <<: *uni-env
+      APPLICATION_ENV: "local"
+      INTERNAL_JWT_ACCESS_TOKEN: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpZCI6IjNhNjlmYjAzLTZlOTQtNGQ3OC05MmE5LTBlMTRlMGUyNGU1OSIsInVzZXJfaWQiOiIyMTZkYjUwMS0wZDU3LTQyNWEtYTA2Mi03YjM0NjU0MjZhNWIiLCJvcmdhbml6YXRpb25faWQiOiIyMTZkYjUwMS0wZDU3LTQyNWEtYTA2Mi03YjM0NjU0MjZhNWIiLCJ2ZXJzaW9uIjoiMSIsInRva2VuX3R5cGUiOiJhY2Nlc3MiLCJleHBfZGF0ZSI6IjIwMjItMTAtMTJUMTM6MzQ6MjUuNjkzMzA2IiwiZW52IjoibG9jYWwiLCJwZXJtaXNzaW9ucyI6WzExMDA4LDExMDA5LDExMDEwLDExMDExLDExMDEyLDExMDEzLDExMDE0LDExMDE1LDExMDE2LDExMDE3LDExMDE4LDExMDE5LDExMDIwLDExMDIxLDExMDIyLDExMDIzLDExMDI0LDExMDI1LDExMDI2LDExMDI3LDExMDI4LDExMDI5LDExMDMwLDExMDMxLDExMDMyLDExMDMzLDExMDM0LDExMDM1LDExMDM2LDExMDM3LDExMDM4LDExMDM5LDExMDQwLDExMDQxLDExMDQyLDExMDQzLDExMDQ0LDExMDQ1LDExMDQ2LDExMDQ3LDExMDQ4LDExMDQ5LDExMDUwLDExMDUxLDE1MDAxLDE1MDAyLDE1MDAzLDE1MDA0LDE1MDA1LDEyMDEwLDEyMDExLDEyMDEyLDEyMDEzLDE1MDA2LDE1MDA3LDE1MDA4LDExMDAxLDExMDAyLDExMDAzLDExMDA0LDExMDA1LDExMDA2LDExMDA3XX0.gHBhUHRUwNwoGle6aYwvzedEN7FwoaNLf1vFZQTAKV2c1VqJ0Ng5ImeGKDpdFtWC2_srQR2w4q43jM6C-4zvOn_ZvNe953ZKLPT5RKd7oeUftbu1IlqEZqC2K1LVF0Ez1MRwa7zaNH6aoQfD9yCeDAVEZ5NoeIeKCqbDulRPorqbDtSsdHG4ggCPl5C8ht41su9j8YEYP1StB3KPJ1FtpT7i0vnq2dbDoTXOfPNZBaaOnx9VIoqiAqY8Nv2InPYKUbPq3acJhVJ5WAGz4lYuwPzZYRlbqQku2Xrq90yWkNBmrsnjWvqeyQzYCHLFmmFNhSLNyxwtBnauHGdHva6_v3JrIJH18ChvS9CWUkyy5MhQP3KEs3kI8ANjti3Z2vra79sVQ1J8pEDheKrgU_NT5uCM1Dru7-14oCuv3k5mhljpdphMhoiZgfmvrEQiIfPjbykR7-22gqpraUAGv5cygRNIh7hzJWnd6qZmzXn40zZK0srZzjgVGtu23cJAnwW6ZoIPK8m9iSqeC25r4OKdqUzboTckt-lSciyZ3PKYIxEy7qZgvg-00bzp_w-5hasL6ychDrGc9lbQXSDl8xr5XUXw3F5V5Sd5P4G82wZu1NQZtxy31NkgfRdetvmLNH9n3nj8J9L7xhq1Oqufdnp2JKK88J6VIns-7xwFOVgzaXg"
+      APPLICATION_PORT: 8002
+      INTERNAL_API_ENDPOINT: "http://data_aggregator__device__api:5000"
+      APPLICATION_RELOAD: 1
+      NERO_OLD__ENC_KEY_ID: '032f7c78-a871-48ce-a0f3-8633152429a9'
+      NERO_OLD__AES_KEY: 'SHH2sXqzQ9pAXmFj3S3aydbKwwqxdd6M'
+    depends_on:
+      - data_aggregator__db
+      - data_aggregator__api
+      - data_aggregator__device__api
+    command: "/docker_app/src/data_aggregator__web/bin-start.sh"
+    expose:
+      - 8002
+    volumes:
+      - ./src:/docker_app/src
+      - ./srv:/docker_app/srv
+      - ./data_aggregator_sdk:/docker_app/data_aggregator_sdk
+
+  data_aggregator__db__ui:
+    restart: always
+    image: sosedoff/pgweb
+    expose:
+      - 8081
+    environment:
+        DATABASE_URL: "postgresql://admin:admin@data_aggregator__db:5432/device_db?sslmode=disable"
+    depends_on:
+      - data_aggregator__db
+
+  data_aggregator__broker__amqp:
+    image: rabbitmq:3.8-management
+    expose:
+      - 5672
+      - 15672
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitm
+      - ./data_aggregator_sdk:/docker_app/data_aggregator_sdk
+
+  data_aggregator__uni_worker__data_reception_input:
+    build:
+      context: "."
+      dockerfile: "srv/common-python/Dockerfile"
+    restart: unless-stopped
+    environment:
+      <<: *uni-env
+      WORKER_NAME: "data_aggregator_input"
+    depends_on:
+      - data_aggregator__broker__amqp
+      - data_aggregator__db
+    volumes:
+      - ./src:/docker_app/src
+      - ./data_aggregator_sdk:/docker_app/data_aggregator_sdk
+    command: "/docker_app/src/data_aggregator__uni_worker/bin-start.sh"
+
+  data_agreggator__uni_worker__event:
+    build:
+      context: "."
+      dockerfile: "srv/common-python/Dockerfile"
+    restart: unless-stopped
+    environment:
+      <<: *uni-env
+      WORKER_NAME: "event"
+    depends_on:
+      - data_aggregator__broker__amqp
+      - data_aggregator__db
+    volumes:
+      - ./src:/docker_app/src
+      - ./data_aggregator_sdk:/docker_app/data_aggregator_sdk
+    command: "/docker_app/src/data_aggregator__uni_worker/bin-start.sh"
+
+  data_agreggator__uni_worker__device_data:
+    build:
+      context: "."
+      dockerfile: "srv/common-python/Dockerfile"
+    restart: unless-stopped
+    environment:
+      <<: *uni-env
+      WORKER_NAME: "device_data"
+    depends_on:
+      - data_aggregator__broker__amqp
+      - data_aggregator__db
+    volumes:
+      - ./src:/docker_app/src
+      - ./data_aggregator_sdk:/docker_app/data_aggregator_sdk
+    command: "/docker_app/src/data_aggregator__uni_worker/bin-start.sh"
+
+# раскоментируйте строчки ниже, если хотите запусть сервис локально в связке с другими, сервис data_gateway должен быть запущен первым
+networks:
+  default:
+    external: true
+    name: ul_iot_account_data_reception_default

@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<script>
+  function show_view_add_network_device() {
+      document.getElementById('view_add_network_device').hidden=false;
+    }
+    function hidden_view_add_network_device() {
+      document.getElementById('view_add_network_device').hidden=true;
+    }
+
+    function add_network_device() {
+      if (document.getElementById('view_add_network_device').hidden === false) {
+        document.getElementById('tag').value = "False";
+      }else {
+        document.getElementById('tag').value = "True";
+      }
+    }
+
+</script>
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 mt-3" id="devices">
+    <div class="container-fluid pr-0 pl-0">
+        <div class="row">
+            <div class="col-xl-6">
+                <h2>
+                    <i class="bi bi-grid-3x3-gap"></i>
+                  {{ title }}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <form method="POST" id="form_network_device" action="{{ url_for('view_add_devices_and_network_device') }}">
+      <div class="container-fluid pr-0 pl-0">
+        <div class="col-4">
+          <input name="tag" id="tag" value="True" hidden>
+            <!-- ----------------------------------------------------- -->
+
+            <div class="col-12 border bg-light" style="margin-top:20px; padding-top: 10px; padding-bottom: 10px">
+                <div class="row">
+                  <div class="col-5 text-right align-self-center">
+                    METERING TYPE:
+                  </div>
+                  <div class="col-7 align-self-center">
+                    <select class="form-control" id="device_metring_type" name="device_metring_type">
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row" style="margin-top:10px;">
+                  <div class="col-5 text-right align-self-center">
+                    MODIFICATION TYPE:
+                  </div>
+                  <div class="col-7 align-self-center">
+                    <select class="form-control" id="device_modification_type" name="device_modification_type">
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row" style="margin-top:10px;">
+                  <div class="col-5 text-right align-self-center">
+                    MODIFICATION:
+                  </div>
+                  <div class="col-7 align-self-center">
+                    <select class="form-control" id="device_modification" name="device_modification">
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row" style="margin-top:10px;">
+                  <div class="col-5 text-right align-self-center">
+                    MANUFACTURER:
+                  </div>
+                  <div class="col-7 align-self-center">
+                    <select class="form-control" id="device_manufactures" name="device_manufactures">
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row" style="margin-top:10px;">
+                  <div class="col-5 text-right align-self-center">
+                    MANUFACTURER S/N:
+                  </div>
+                  <div class="col-7 align-self-center">
+                    <input type="text" class="col-sm-12 form-control" id="manufacturer_serial_number" name="manufacturer_serial_number" placeholder="S/N">
+                  </div>
+                </div>
+
+                <div class="row" style="margin-top:10px;">
+                  <div class="col-5 text-right align-self-center">
+                    FIRMWARE VERSION:
+                  </div>
+                  <div class="col-7 align-self-center">
+                    <input type="text" class="col-sm-12 form-control" id="firmware_version" name="firmware_version" placeholder="firmware version">
+                  </div>
+                </div>
+
+                <div class="row" style="margin-top:10px;">
+                  <div class="col-5 text-right align-self-center">
+                    HARDWARE VERSION:
+                  </div>
+                  <div class="col-7 align-self-center">
+                    <input type="text" class="col-sm-12 form-control" id="hardware_version" name="hardware_version" placeholder="hardware version">
+                  </div>
+                </div>
+
+                <div class="row" style="padding-left: 20%; padding-bottom: 10px; padding-top: 15px; ">
+                  <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active" onchange="show_view_add_network_device();">
+                      <input id="buttton2" type="radio" name="options" checked> Add network_device
+                    </label>
+                    <label class="btn btn-secondary" onchange="hidden_view_add_network_device();">
+                      <input type="radio" name="options" id="no_add_network_device"> Not add network_device
+                    </label>
+                  </div>
+                </div>
+            </div>
+
+            <!-- ----------------------------------------------------- -->
+
+            <div class="col-12 border bg-light" style="margin-top:20px; padding-top: 10px; padding-bottom: 10px" id="view_add_network_device">
+
+              <div class="row" style="margin-top:10px">
+                <div class="col-5 text-right align-self-center">
+                  MAC:
+                </div>
+                <div class="col-7 align-self-center">
+                  <input type="text" class="col-sm-12 form-control" id="mac" name="mac" placeholder="MAC">
+                </div>
+              </div>
+
+              <div class="row" style="margin-top:10px">
+                <div class="col-5 text-right align-self-center">
+                  DECRYPTION KEY:
+                </div>
+                <div class="col-7 align-self-center">
+                  <input type="text" class="col-sm-12 form-control" id="key" name="key" placeholder="DECRYPTION KEY">
+                </div>
+              </div>
+
+
+               <div class="row" style="margin-top:10px">
+                <div class="col-5 text-right align-self-center">
+                  DATA GATEWAY:
+                </div>
+                <div class="col-7 align-self-center">
+                  <select class="form-control" id="data_gateway" name="data_gateway">
+                  </select>
+                </div>
+              </div>
+
+
+              <div class="row" style="margin-top:10px">
+                <div class="col-5 text-right align-self-center">
+                  DATA GATEWAY NETWORK:
+                </div>
+                <div class="col-7 align-self-center">
+                  <select class="form-control" id="data_gateway_network" name="data_gateway_network">
+                  </select>
+                </div>
+              </div>
+
+
+              <div class="row" style="margin-top:10px;">
+                <div class="col-5 text-right align-self-center">
+                  UPLINK PROTOCOL:
+                </div>
+                <div class="col-7 align-self-center">
+                  <select class="form-control" id="uplink_protocol" name="uplink_protocol">
+                  </select>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top:10px">
+                <div class="col-5 text-right align-self-center">
+                  DOWNLINK PROTOCOL:
+                </div>
+                <div class="col-7 align-self-center">
+                  <select class="form-control" id="downlink_protocol" name="downlink_protocol">
+                  </select>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- ----------------------------------------------------- -->
+        </div>
+        <div class="row col-4" style="margin-top:10px; padding: 5px">
+          <div class="col-12 text-center align-self-center">
+            <button type="submit" onclick="add_network_device()" class="btn btn-success">ADD</button>
+          </div>
+        </div>
+      </div>
+    </form>
+</main>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+  (() => {
+
+
+
+    let $data_gateway = $('#data_gateway')
+    let $device_metring_type = $('#device_metring_type')
+    let $device_modification_type = $('#device_modification_type').prop('disabled', true)
+    $('#device_modification').prop('disabled', true)
+
+
+    get_select_metering_type("#device_metring_type")
+    get_select_protocol('#uplink_protocol')
+    get_select_protocol('#downlink_protocol')
+    get_select_data_gateway('#data_gateway')
+    get_select_manufacturer('#device_manufactures')
+
+    $data_gateway.on("change", function () {
+        const data_gateway_id = $data_gateway.val();
+        if (data_gateway_id === 'None') {
+          return
+        }
+        get_select_data_gateway_network_id('#data_gateway_network', data_gateway_id)
+      });
+
+    $device_metring_type.on("change", function () {
+        const device_metring_type_id = $device_metring_type.val();
+        if (device_metring_type_id === 'None') {
+          return
+        }
+        $('#device_modification').prop('disabled', true).val("")
+        get_select_modification_type_by_id('#device_modification_type', device_metring_type_id)
+        $device_modification_type.prop('disabled', false)
+      });
+
+    $device_modification_type.on("change", function () {
+        const device_modification_type = $device_modification_type.val();
+        if (device_modification_type === 'None') {
+          return
+        }
+        get_select_modification_by_id('#device_modification', device_modification_type)
+        $('#device_modification').prop('disabled', false)
+      });
+
+  })()
+</script>
+
+{% endblock %}

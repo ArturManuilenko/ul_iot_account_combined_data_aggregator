@@ -1,0 +1,88 @@
+<!-- Modal -->
+<div class="modal fade" id="add_data_gateway_network_device_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add network_device</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="{{ url_for('view_add_network_device', device_id=device.id) }}">
+          <div class="col-12 modal-body">
+            <div class="col-12 border bg-light" style="margin-top:20px; padding-top: 10px; padding-bottom: 10px" id="view_add_network_device">
+
+              <div class="row" style="margin-top:10px">
+                <div class="col-5 text-right align-self-center">
+                  MAC:
+                </div>
+                <div class="col-7 align-self-center">
+                  <input type="text" class="col-sm-12 form-control" id="mac" name="mac" placeholder="MAC">
+                </div>
+              </div>
+
+
+              <div class="row" style="margin-top:10px">
+                <div class="col-5 text-right align-self-center">
+                  DECRYPTION KEY:
+                </div>
+                <div class="col-7 align-self-center">
+                  <input type="text" class="col-sm-12 form-control" id="key" name="key" placeholder="DECRYPTION KEY">
+                </div>
+              </div>
+
+
+               <div class="row" style="margin-top:10px">
+                <div class="col-5 text-right align-self-center">
+                  data_gateway:
+                </div>
+                <div class="col-7 align-self-center">
+                  <select class="form-control" id="data_gateway" name="data_gateway">
+                  </select>
+                </div>
+              </div>
+
+
+              <div class="row" style="margin-top:10px">
+                <div class="col-5 text-right align-self-center">
+                  data_gateway_network:
+                </div>
+                <div class="col-7 align-self-center">
+                  <select class="form-control" id="data_gateway_network" name="data_gateway_network">
+                  </select>
+                </div>
+              </div>
+
+
+              <div class="row" style="margin-top:10px;">
+                <div class="col-5 text-right align-self-center">
+                  uplink_protocol:
+                </div>
+                <div class="col-7 align-self-center">
+                  <select class="form-control" id="uplink_protocol" name="uplink_protocol">
+                  </select>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top:10px">
+                <div class="col-5 text-right align-self-center">
+                  downlink_protocol:
+                </div>
+                <div class="col-7 align-self-center">
+                  <select class="form-control" id="downlink_protocol" name="downlink_protocol">
+                  </select>
+                </div>
+              </div>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" onclick="add_network_device()" class="btn btn-success">ADD</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+
